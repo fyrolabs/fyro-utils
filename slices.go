@@ -1,4 +1,4 @@
-package util
+package utils
 
 func Map[S any, T any](items []S, cb func(S) T) []T {
 	results := make([]T, len(items))
