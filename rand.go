@@ -24,6 +24,24 @@ func RandAlphaNumeric(n int) string {
 	return string(b)
 }
 
+type VerifyFunc func(str string) (bool, error)
+
+func RandUniqueAlphaNumeric(
+	n int, verify VerifyFunc,
+) (string, error) {
+	randStr := RandAlphaNumeric(n)
+	ok, err := verify(randStr)
+	if err != nil {
+		return "", err
+	}
+
+	if ok {
+		return randStr, nil
+	}
+
+	return RandUniqueAlphaNumeric(n, verify)
+}
+
 func GenerateAESKey(len int) string {
 	key := make([]byte, len)
 	_, _ = io.ReadFull(cryptoRand.Reader, key)
