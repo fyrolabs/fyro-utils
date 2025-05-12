@@ -11,7 +11,19 @@ import (
 
 var (
 	alphaNumLetters = []rune("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	numericLetters  = []rune("0123456789")
 )
+
+func RandNumeric(n int) string {
+	randSrc := mathRand.NewSource(time.Now().UnixNano())
+	random := mathRand.New(randSrc)
+
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = alphaNumLetters[random.Intn(len(numericLetters))]
+	}
+	return string(b)
+}
 
 func RandAlphaNumeric(n int) string {
 	randSrc := mathRand.NewSource(time.Now().UnixNano())
